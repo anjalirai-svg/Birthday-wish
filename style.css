@@ -309,5 +309,56 @@ button{
 width:90%;
 
 }
+    /* Floating Hearts */
+
+.heart{
+
+position:fixed;
+
+bottom:-20px;
+
+animation:heartFloat 5s linear forwards;
+
+pointer-events:none;
+
+z-index:999;
+
+}
+
+@keyframes heartFloat{
+
+0%{
+
+transform:translateY(0) scale(1);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(-110vh) scale(1.8);
+
+opacity:0;
+
+}
+
+}
+
+/* Image Zoom */
+
+.zoom{
+
+transform:scale(1.15);
+
+transition:.4s;
+
+box-shadow:0 0 30px rgba(255,255,255,.8);
+
+z-index:100;
+
+position:relative;
+
+}
 
 }
