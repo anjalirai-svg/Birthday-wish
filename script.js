@@ -1,75 +1,164 @@
-const btn = document.getElementById("surpriseBtn");
+// ===============================
+// Typewriter Effect
+// ===============================
+
+const text =
+"To the world's best brother, may your birthday be as amazing as you are! ❤️";
+
+let index = 0;
+
+function typeWriter() {
+    if (index < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 60);
+    }
+}
+
+window.onload = () => {
+    typeWriter();
+};
+
+// ===============================
+// Gift Button + Surprise + Confetti
+// ===============================
+
+const giftBtn = document.getElementById("giftBtn");
 const surprise = document.getElementById("surprise");
 
-btn.onclick = function(){
+giftBtn.addEventListener("click", () => {
 
     surprise.classList.remove("hidden");
 
-    startConfetti();
+    surprise.scrollIntoView({
+        behavior: "smooth"
+    });
 
-}
+    // Confetti
+    confetti({
+        particleCount: 180,
+        spread: 120,
+        origin: {
+            y: 0.6
+        }
+    });
 
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
+    setTimeout(() => {
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles=[];
-
-function startConfetti(){
-
-    particles=[];
-
-    for(let i=0;i<250;i++){
-
-        particles.push({
-
-            x:Math.random()*canvas.width,
-            y:Math.random()*canvas.height-canvas.height,
-
-            r:Math.random()*6+2,
-
-            d:Math.random()*250,
-
-            color:`hsl(${Math.random()*360},100%,50%)`,
-
-            tilt:Math.random()*10-10
-
+        confetti({
+            particleCount: 150,
+            spread: 160
         });
+
+    }, 700);
+
+});
+
+// ===============================
+// Music Player
+// ===============================
+
+const musicBtn = document.getElementById("musicBtn");
+const song = document.getElementById("song");
+
+let playing = false;
+
+musicBtn.addEventListener("click", () => {
+
+    if (!playing) {
+
+        song.play();
+
+        musicBtn.innerHTML = "⏸ Pause Music";
+
+        playing = true;
+
+    } else {
+
+        song.pause();
+
+        musicBtn.innerHTML = "🎵 Play Birthday Music";
+
+        playing = false;
 
     }
 
-    animate();
+});
 
-}
+// ===============================
+// Image Zoom Effect
+// ===============================
 
-function animate(){
+const images = document.querySelectorAll(".images img");
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+images.forEach((img) => {
 
-    particles.forEach(p=>{
+    img.addEventListener("click", () => {
 
-        ctx.beginPath();
+        if (img.classList.contains("zoom")) {
 
-        ctx.fillStyle=p.color;
+            img.classList.remove("zoom");
 
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        } else {
 
-        ctx.fill();
+            images.forEach(i => i.classList.remove("zoom"));
 
-        p.y+=3;
-
-        p.x+=Math.sin(p.d);
-
-        if(p.y>canvas.height){
-
-            p.y=-20;
+            img.classList.add("zoom");
 
         }
 
     });
 
-    requestAnimationFrame(animate);
+});
+
+// ===============================
+// Floating Hearts
+// ===============================
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.innerHTML = "❤️";
+
+    heart.classList.add("heart");
+
+    heart.style.left = Math.random() * window.innerWidth + "px";
+
+    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
 
 }
+
+setInterval(createHeart, 1200);
+
+// ===============================
+// Welcome Animation
+// ===============================
+
+const hero = document.querySelector(".hero");
+
+hero.style.opacity = "0";
+
+setTimeout(() => {
+
+    hero.style.transition = "1.5s";
+
+    hero.style.opacity = "1";
+
+}, 200);
+
+// ===============================
+// Happy Birthday Popup
+// ===============================
+
+setTimeout(() => {
+
+    alert("🎉 Happy Birthday! Wishing you a wonderful year ahead! ❤️");
+
+}, 1500);
